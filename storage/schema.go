@@ -1,6 +1,6 @@
 package storage
 
-const schema = `-- Timestamp is stored int of UnixTime
+const schema = `
 CREATE TABLE IF NOT EXISTS users(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR (100),
@@ -13,10 +13,10 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS cabs(
     id BIGINT AUTO_INCREMENT,
-    veh_no VARCHAR(20) NOT NULL,
+    veh_no VARCHAR (20) NOT NULL,
     lat DOUBLE (10, 7),
     lon DOUBLE (10, 7),
-    loc_timestamp INT, 
+    loc_timestamp INT,  
     driver_id BIGINT NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (veh_no),
@@ -34,5 +34,4 @@ CREATE TABLE IF NOT EXISTS bookings(
     user_id BIGINT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
-);
-`
+);`

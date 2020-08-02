@@ -41,7 +41,7 @@ func New(config DbConfig) (*Db, error) {
 		} else {
 			db.d.SetMaxOpenConns(1)
 		}
-		db.d.MustExec(schema)
+		// db.d.MustExec(schema)
 	})
 
 	return db, err
