@@ -6,6 +6,9 @@
 
 > `config_example.json` shows an example of server config. Please copy this file as `config.json` and modify. The build takes the location of this file as the first argument. If not provided, assumes default values.
 
+* To build run `make build`
+* To test run `make test`
+
 TODO:
 To confirm booking 
 To register users
