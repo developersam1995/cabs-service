@@ -36,6 +36,11 @@ func New(config DbConfig) (*Db, error) {
 		db = &Db{
 			d: d,
 		}
+		if config.Pooling {
+			db.d.SetMaxOpenConns(config.Connections)
+		} else {
+			db.d.SetMaxOpenConns(1)
+		}
 	})
 
 	return db, err
