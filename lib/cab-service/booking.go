@@ -1,12 +1,12 @@
 package cs
 
 type BookingRequest struct {
-	FromLat    float64 `json:"from_lat" binding:"required"`
-	FromLon    float64 `json:"from_lon: binding:required""`
-	ToLat      float64 `json:"to_lat" binding:"required"`
-	ToLon      float64 `json:"to_lon: binding:required""`
-	UserID     int     `json:"user_id" binding:"required"`
-	PickupTime int     `json:"pickup_time" binding:"required"`
+	FromLat    float64 `json:"from_lat" binding:"required" db:"from_lat"`
+	FromLon    float64 `json:"from_lon" binding:"required" db:"from_lon"`
+	ToLat      float64 `json:"to_lat" binding:"required" db:"to_lat"`
+	ToLon      float64 `json:"to_lon" binding:"required" db:"to_lon"`
+	UserID     int     `json:"user_id" binding:"required" db:"user_id"`
+	PickupTime int     `json:"pickup_time" binding:"required" db:"pickup_time"`
 }
 
 // Some storage interface needs to implement this

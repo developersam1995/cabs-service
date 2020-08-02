@@ -1,11 +1,9 @@
 package cs
 
 type Cabs struct {
-	VehNo       string  `json:"veh_no" binding:"required"`
-	Lat         float64 `json:"lat", binding:"required"`
-	Lon         float64 `json:"lon", binding:"required"`
-	DriverName  string  `json:"driver_name" binding:"required"`
-	DriverPhone int     `json:"driver_phone" binding:"required"`
+	VehNo string  `json:"veh_no" binding:"required" db:"veh_no"`
+	Lat   float64 `json:"lat" binding:"required" db:"lat"`
+	Lon   float64 `json:"lon" binding:"required" db:"lon"`
 }
 
 // Some storage interface needs to implement this
