@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strconv"
 
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
 	"github.com/developersam1995/cabs-service/storage"
@@ -64,5 +65,9 @@ func main() {
 	setupBookingRoutes(r, bookingService)
 	setupCabRoutes(r, cabsService)
 
-	r.Run(":8080")
+	p := ":8080"
+	if config.Port > 0 {
+		p = ":" + strconv.Itoa(config.Port)
+	}
+	r.Run(p)
 }
