@@ -23,6 +23,6 @@ func New(config DbConfig) *Db {
 	return db
 }
 
-func (db *Db) BookCab(req cs.BookRequest) (int, error) {
+func (db *Db) SaveBooking(req cs.BookRequest) (int, error) {
 	return 1, nil
 }

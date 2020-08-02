@@ -7,10 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type booker interface {
-	BookCab(cs.BookRequest) (bookingID int, err error)
-}
-
 type location struct {
 	Lat float64 `json:"lat" binding:"required"`
 	Lon float64 `json:"lon" binding:"required"`
@@ -23,9 +19,11 @@ type bookingPost struct {
 	PickupTime int      `json:"pickup_time" binding:"required"`
 }
 
-func MakeBookingsPoster(b booker) gin.HandlerFunc {
+func MakeBookingsPoster(b cs.BookingService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		// Should use userID from an authenticated source such as JWT
+		// Keeping it in the body for the sake of brevity
 		reqBody := bookingPost{}
 		if err := c.ShouldBindJSON(&reqBody); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -43,7 +41,7 @@ func MakeBookingsPoster(b booker) gin.HandlerFunc {
 			UserID:     reqBody.UserID,
 			PickupTime: reqBody.PickupTime,
 		}
-		id, err := b.BookCab(br)
+		id, err := b.Book(br)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"message": serverErrMsg,
