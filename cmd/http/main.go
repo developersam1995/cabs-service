@@ -38,17 +38,15 @@ func init() {
 		MaxCabGetDist: 2000,
 	}
 
-	var d []byte
-	var err error
 	if len(os.Args) > 1 {
-		d, err = ioutil.ReadFile(os.Args[1])
+		d, err := ioutil.ReadFile(os.Args[1])
 		if err != nil {
 			log.Fatalln("Invalid argument for config file")
 		}
-	}
-	err = json.Unmarshal(d, &config)
-	if err != nil {
-		log.Fatalln("Invalid json format. Please refer config_example.json")
+		err = json.Unmarshal(d, &config)
+		if err != nil {
+			log.Fatalln("Invalid json format. Please refer config_example.json")
+		}
 	}
 
 }
