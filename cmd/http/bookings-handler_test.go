@@ -43,4 +43,9 @@ func TestBooking(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, gw.Code, "Unable to fetch bookings")
 
+	// create one more booking
+	newReq, _ := http.NewRequest("POST", "/booking", bytes.NewBuffer(reqBody))
+	newRes := httptest.NewRecorder()
+	r.ServeHTTP(newRes, newReq)
+	assert.Equal(t, http.StatusBadRequest, newRes.Code, "Booking created twice")
 }
