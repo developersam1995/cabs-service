@@ -18,11 +18,15 @@ func MakeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 		longitude, lonErr := strconv.ParseFloat(lon, 64)
 		distance, distErr := strconv.Atoi(dist)
 
-		if latErr != nil || lonErr != nil || distErr != nil {
+		if latErr != nil || lonErr != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": invalidQuery,
 			})
 			return
+		}
+
+		if distErr != nil || distance > maxCabDistance {
+			distance = maxCabDistance
 		}
 
 		loc := cs.Location{
