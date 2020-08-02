@@ -58,13 +58,17 @@ func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
 
 func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
-	db.d.Select(&brs, "SELECT * FROM bookings ORDER BY id DESC")
-	return brs, nil
+	err := db.d.Select(&brs, "SELECT * FROM bookings ORDER BY id DESC")
+	return brs, err
 }
 
 func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cabs, error) {
 	cabs := []cs.Cabs{}
-	return cabs, nil
+	// calc distance and filter
+	err := db.d.Select(&cabs, `SELECT veh_no, lat, lon FROM cabs 
+						HAVING (6371 * acos(cos(radians(?)) * cos(radians(lat)) *
+			            cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) < ?`, lat, lon, lat, distance)
+	return cabs, err
 }
 
 // Just to make sure that a user with that id exists for tests, which might fail becauses of foreign key constraint
