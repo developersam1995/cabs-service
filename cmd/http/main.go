@@ -22,8 +22,10 @@ func main() {
 	db := storage.New(storage.DbConfig{})
 
 	bookingService := cs.NewBookingService(db)
-	cabsService := cs.CabsService(db)
+	cabsService := cs.NewCabsService(db)
+
 	setupBookingRoutes(r, bookingService)
 	setupCabRoutes(r, cabsService)
+
 	r.Run(":8080")
 }
