@@ -41,11 +41,11 @@ func init() {
 	if len(os.Args) > 1 {
 		d, err := ioutil.ReadFile(os.Args[1])
 		if err != nil {
-			log.Fatalln("Invalid argument for config file")
+			log.Println("Invalid argument for config file")
 		}
 		err = json.Unmarshal(d, &config)
 		if err != nil {
-			log.Fatalln("Invalid json format. Please refer config_example.json")
+			log.Println("Invalid json format. Please refer config_example.json")
 		}
 	}
 

@@ -2,6 +2,7 @@ package storage
 
 import (
 	"bytes"
+	"fmt"
 	"sync"
 
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
@@ -49,16 +50,25 @@ func New(config DbConfig) (*Db, error) {
 }
 
 func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
-	db.d.Exec(`INSERT INTO bookings `)
-	return 1, nil
+	r, err := db.d.Exec(`INSERT INTO bookings (from_lat, from_lon, to_lat, to_lon, pickup_time, user_id)
+	VALUES (?, ?, ?, ?, ?, ?)`, req.FromLat, req.FromLon, req.ToLat, req.ToLon, req.PickupTime, req.UserID)
+	id, _ := r.LastInsertId()
+	return int(id), err
 }
 
 func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
+	db.d.Select(&brs, "SELECT * FROM bookings ORDER BY id DESC")
 	return brs, nil
 }
 
 func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cabs, error) {
 	cabs := []cs.Cabs{}
 	return cabs, nil
+}
+
+// Just to make sure that a user with that id exists for tests, which might fail becauses of foreign key constraint
+func (db *Db) InsertTestUser(id int) {
+	r, err := db.d.Exec(`INSERT INTO users SET id=?`, id)
+	fmt.Println("Test User creation: ", r, err)
 }
