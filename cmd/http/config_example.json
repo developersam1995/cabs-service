@@ -1,0 +1,11 @@
+{
+    "port" : 8000,
+    "mysqlDb" : {
+        "host": "127.0.0.1",
+        "user": "server_x",
+        "password": "testpassword",
+        "db": "cabs_db",
+        "pooling": true,
+        "connections": 20
+    }
+}
