@@ -18,6 +18,12 @@ func makeBookingsPoster(b cs.BookingService) gin.HandlerFunc {
 			return
 		}
 		id, err := b.Book(br)
+		if err == cs.ErrUnconfirmedBookingsExist {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": serverErrMsg,

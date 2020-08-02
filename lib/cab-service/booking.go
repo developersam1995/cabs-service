@@ -15,6 +15,7 @@ type BookingRequest struct {
 type bookingRepo interface {
 	SaveBooking(BookingRequest) (id int, err error)
 	FetchBookings(userID int) ([]BookingRequest, error)
+	FetchUnconfirmedBookings(userID int) ([]BookingRequest, error)
 }
 
 // Services provided by the package
@@ -36,6 +37,14 @@ func NewBookingService(repo bookingRepo) BookingService {
 
 func (s *bookingStore) Book(r BookingRequest) (int, error) {
 	// Any business logic like validation goes here
+	existingRequests, err := s.db.FetchUnconfirmedBookings(r.UserID)
+	if err != nil {
+		return 0, err
+	}
+	if len(existingRequests) > 0 {
+		return 0, ErrUnconfirmedBookingsExist
+	}
+
 	return s.db.SaveBooking(r)
 }
 

@@ -11,3 +11,8 @@
 * user : server_x
 * password: testpassword
 
+TODO:
+To confirm booking 
+To register users
+To authenticate and authorize
+To register cabs

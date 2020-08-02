@@ -76,3 +76,9 @@ func (db *Db) InsertTestUser(id int) {
 	r, err := db.d.Exec(`INSERT INTO users SET id=?`, id)
 	fmt.Println("Test User creation: ", r, err)
 }
+
+func (db *Db) FetchUnconfirmedBookings(userID int) ([]cs.BookingRequest, error) {
+	brs := []cs.BookingRequest{}
+	err := db.d.Select(&brs, "SELECT * FROM bookings WHERE is_confirmed=0 ORDER BY id DESC")
+	return brs, err
+}
