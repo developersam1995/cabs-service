@@ -49,6 +49,7 @@ func New(config DbConfig) (*Db, error) {
 }
 
 func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
+	db.d.Exec(`INSERT INTO bookings `)
 	return 1, nil
 }
 
@@ -57,7 +58,7 @@ func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	return brs, nil
 }
 
-func (db *Db) FetchCabs(l cs.Location, distance int) ([]cs.Cabs, error) {
+func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cabs, error) {
 	cabs := []cs.Cabs{}
 	return cabs, nil
 }

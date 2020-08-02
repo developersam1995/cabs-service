@@ -1,15 +1,12 @@
 package cs
 
-type Location struct {
-	Lat float64 `json:"lat" binding:"required"`
-	Lon float64 `json:"lon" binding:"required"`
-}
-
 type BookingRequest struct {
-	From       Location `json:"from" binding:"required"`
-	To         Location `json:"to" binding:"required"`
-	UserID     int      `json:"user_id" binding:"required"`
-	PickupTime int      `json:"pickup_time" binding:"required"`
+	FromLat    float64 `json:"from_lat" binding:"required"`
+	FromLon    float64 `json:"from_lon: binding:required""`
+	ToLat      float64 `json:"to_lat" binding:"required"`
+	ToLon      float64 `json:"to_lon: binding:required""`
+	UserID     int     `json:"user_id" binding:"required"`
+	PickupTime int     `json:"pickup_time" binding:"required"`
 }
 
 // Some storage interface needs to implement this

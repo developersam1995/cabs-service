@@ -29,11 +29,7 @@ func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 			distance = config.MaxCabGetDist
 		}
 
-		loc := cs.Location{
-			Lat: latitude,
-			Lon: longitude,
-		}
-		cabs, err := cas.ListAll(loc, distance)
+		cabs, err := cas.ListAll(latitude, longitude, distance)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"message": serverErrMsg,
