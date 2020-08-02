@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MakeBookingsGetter(b cs.BookingService) gin.HandlerFunc {
+func makeBookingsGetter(b cs.BookingService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		// Should use userID from an authenticated source such as JWT

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func MakeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
+func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		lat := c.Query("lat")
 		lon := c.Query("lon")

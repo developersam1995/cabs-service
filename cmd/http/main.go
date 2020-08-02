@@ -9,12 +9,12 @@ import (
 type jsonMock map[string]interface{}
 
 func setupBookingRoutes(r *gin.Engine, b cs.BookingService) {
-	r.POST("/booking", MakeBookingsPoster(b))
-	r.GET("/booking/:userID", MakeBookingsGetter(b))
+	r.POST("/booking", makeBookingsPoster(b))
+	r.GET("/booking/:userID", makeBookingsGetter(b))
 }
 
 func setupCabRoutes(r *gin.Engine, c cs.CabsService) {
-	r.GET("/cabs", MakeCabsGetter(c))
+	r.GET("/cabs", makeCabsGetter(c))
 }
 
 func main() {
