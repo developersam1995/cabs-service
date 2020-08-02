@@ -31,3 +31,8 @@ func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
 	return brs, nil
 }
+
+func (db *Db) FetchCabs(l cs.Location, distance int) ([]cs.Cabs, error) {
+	cabs := []cs.Cabs{}
+	return cabs, nil
+}

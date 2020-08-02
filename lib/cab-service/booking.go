@@ -24,23 +24,23 @@ type BookingService interface {
 	ListAll(userID int) ([]BookingRequest, error)
 }
 
-type store struct {
+type bookingStore struct {
 	db bookingRepo
 }
 
 func NewBookingService(repo bookingRepo) BookingService {
-	return &store{
+	return &bookingStore{
 		db: repo,
 	}
 
 }
 
-func (s *store) Book(r BookingRequest) (int, error) {
+func (s *bookingStore) Book(r BookingRequest) (int, error) {
 	// Any business logic like validation goes here
 	return s.db.SaveBooking(r)
 }
 
-func (s *store) ListAll(userID int) ([]BookingRequest, error) {
+func (s *bookingStore) ListAll(userID int) ([]BookingRequest, error) {
 	// Any business logic goes here
 	return s.db.FetchBookings(userID)
 }

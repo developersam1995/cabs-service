@@ -8,16 +8,22 @@ import (
 
 type jsonMock map[string]interface{}
 
-func setupRouter(b cs.BookingService) *gin.Engine {
-	r := gin.Default()
+func setupBookingRoutes(r *gin.Engine, b cs.BookingService) {
 	r.POST("/booking", MakeBookingsPoster(b))
 	r.GET("/booking/:userID", MakeBookingsGetter(b))
-	return r
+}
+
+func setupCabRoutes(r *gin.Engine, c cs.CabsService) {
+	r.GET("/cabs", MakeCabsGetter(c))
 }
 
 func main() {
+	r := gin.Default()
 	db := storage.New(storage.DbConfig{})
+
 	bookingService := cs.NewBookingService(db)
-	r := setupRouter(bookingService)
+	cabsService := cs.CabsService(db)
+	setupBookingRoutes(r, bookingService)
+	setupCabRoutes(r, cabsService)
 	r.Run(":8080")
 }
