@@ -23,6 +23,11 @@ func New(config DbConfig) *Db {
 	return db
 }
 
-func (db *Db) SaveBooking(req cs.BookRequest) (int, error) {
+func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
 	return 1, nil
+}
+
+func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
+	brs := []cs.BookingRequest{}
+	return brs, nil
 }

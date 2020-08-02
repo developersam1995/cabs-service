@@ -6,9 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type jsonMock map[string]interface{}
+
 func setupRouter(b cs.BookingService) *gin.Engine {
 	r := gin.Default()
 	r.POST("/booking", MakeBookingsPoster(b))
+	r.GET("/booking/:userID", MakeBookingsGetter(b))
 	return r
 }
 

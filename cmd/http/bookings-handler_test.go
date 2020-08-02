@@ -13,8 +13,6 @@ import (
 	"github.com/developersam1995/cabs-service/storage"
 )
 
-type jsonMock map[string]interface{}
-
 func TestBooking(t *testing.T) {
 	db := storage.New(storage.DbConfig{})
 	router := setupRouter(db)
