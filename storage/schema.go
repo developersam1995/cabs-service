@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR (100),
     country_code TINYINT (6),
-    phone BIGINT NOT NULL,
+    phone BIGINT,
     hash_pwd TEXT,
     PRIMARY KEY (id),
     UNIQUE (country_code, phone)
