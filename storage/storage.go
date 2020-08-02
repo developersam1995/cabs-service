@@ -1,26 +1,45 @@
 package storage
 
 import (
+	"bytes"
 	"sync"
 
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
+	"github.com/jmoiron/sqlx"
 )
 
 var db *Db
 var once sync.Once
 
 type Db struct {
+	d *sqlx.DB
 }
 
 // Configuration needed for the initialization of connections to db
 type DbConfig struct {
+	Host        string `json:"host"`
+	User        string `json:"user"`
+	Password    string `json:"password"`
+	Db          string `json:"db"`
+	Pooling     bool   `json:"pooling"`
+	Connections int    `json:"connections"`
 }
 
-func New(config DbConfig) *Db {
+func New(config DbConfig) (*Db, error) {
+	var err error
 	once.Do(func() {
-		db = &Db{}
+		var conn bytes.Buffer
+		conn.WriteString(config.User + ":" + config.Password + "@tcp(" + config.Host +
+			":3306)/" + config.Db)
+		d, er := sqlx.Connect("mysql", conn.String())
+		err = er
+		db = &Db{
+			d: d,
+		}
 	})
-	return db
+
+	return db, err
+
 }
 
 func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {

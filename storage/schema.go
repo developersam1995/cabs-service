@@ -1,5 +1,6 @@
--- Timestamp is stored int of UnixTime
+package storage
 
+const schema = `-- Timestamp is stored int of UnixTime
 CREATE TABLE IF NOT EXISTS users(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR (100),
@@ -34,3 +35,4 @@ CREATE TABLE IF NOT EXISTS bookings(
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+`
