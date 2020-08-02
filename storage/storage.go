@@ -28,10 +28,10 @@ type DbConfig struct {
 func New(config DbConfig) (*Db, error) {
 	var err error
 	once.Do(func() {
-		var conn bytes.Buffer
-		conn.WriteString(config.User + ":" + config.Password + "@tcp(" + config.Host +
+		var dsn bytes.Buffer
+		dsn.WriteString(config.User + ":" + config.Password + "@tcp(" + config.Host +
 			":3306)/" + config.Db)
-		d, er := sqlx.Connect("mysql", conn.String())
+		d, er := sqlx.Connect("mysql", dsn.String())
 		err = er
 		db = &Db{
 			d: d,
