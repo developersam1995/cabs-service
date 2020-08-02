@@ -58,7 +58,9 @@ func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
 
 func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
-	err := db.d.Select(&brs, "SELECT * FROM bookings ORDER BY id DESC")
+	err := db.d.Select(&brs, `SELECT id, from_lat, from_lon,
+	to_lat, to_lon, pickup_time, is_confirmed, user_id 
+	FROM bookings ORDER BY id DESC`)
 	return brs, err
 }
 
@@ -79,8 +81,8 @@ func (db *Db) InsertTestUser(id int) {
 
 func (db *Db) FetchUnconfirmedBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
-	err := db.d.Select(&brs, "SELECT id, from_lat, from_lon,
+	err := db.d.Select(&brs, `SELECT id, from_lat, from_lon,
 	to_lat, to_lon, pickup_time, is_confirmed, user_id 
-	FROM bookings WHERE is_confirmed=0 ORDER BY id DESC")
+	FROM bookings WHERE is_confirmed=0 ORDER BY id DESC`)
 	return brs, err
 }

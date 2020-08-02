@@ -34,7 +34,7 @@ func TestBooking(t *testing.T) {
 		"from_lon":    66.23,
 		"to_lat":      13.232,
 		"to_lon":      33.34,
-		"user_id":     1,
+		"user_id":     2,
 		"pickup_time": 1524242631,
 	})
 	if err != nil {
