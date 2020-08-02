@@ -12,7 +12,9 @@ import (
 )
 
 func TestGetCabs(t *testing.T) {
-	db, err := storage.New(config.Db)
+	newCabs := []cs.cab{
+		cs.Cab
+	}
 
 	if err != nil {
 		t.Fatal(err)

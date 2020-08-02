@@ -1,6 +1,6 @@
 package cs
 
-type Cabs struct {
+type Cab struct {
 	VehNo string  `json:"veh_no" binding:"required" db:"veh_no"`
 	Lat   float64 `json:"lat" binding:"required" db:"lat"`
 	Lon   float64 `json:"lon" binding:"required" db:"lon"`
@@ -8,12 +8,12 @@ type Cabs struct {
 
 // Some storage interface needs to implement this
 type cabsRepo interface {
-	FetchCabs(lat, lon float64, distance int) ([]Cabs, error)
+	FetchCabs(lat, lon float64, distance int) ([]Cab, error)
 }
 
 // Services provided by the package
 type CabsService interface {
-	ListAll(lat, lon float64, distance int) ([]Cabs, error)
+	ListAll(lat, lon float64, distance int) ([]Cab, error)
 }
 
 type cabsStore struct {
@@ -27,7 +27,7 @@ func NewCabsService(repo cabsRepo) *cabsStore {
 
 }
 
-func (s *cabsStore) ListAll(lat, lon float64, d int) ([]Cabs, error) {
+func (s *cabsStore) ListAll(lat, lon float64, d int) ([]Cab, error) {
 	// Any business logic like validation goes here
 	return s.db.FetchCabs(lat, lon, d)
 }

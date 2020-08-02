@@ -63,8 +63,8 @@ func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	return brs, err
 }
 
-func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cabs, error) {
-	cabs := []cs.Cabs{}
+func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cab, error) {
+	cabs := []cs.Cab{}
 	// calc distance and filter
 	err := db.d.Select(&cabs, `SELECT veh_no, lat, lon FROM cabs 
 						HAVING (6371 * acos(cos(radians(?)) * cos(radians(lat)) *
