@@ -2,7 +2,6 @@ package storage
 
 import (
 	"bytes"
-	"fmt"
 	"sync"
 
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
@@ -71,12 +70,6 @@ func (db *Db) FetchCabs(lat, lon float64, distance int) ([]cs.Cabs, error) {
 						HAVING (6371 * acos(cos(radians(?)) * cos(radians(lat)) *
 			            cos(radians(lon) - radians(?)) + sin(radians(?)) * sin(radians(lat)))) < ?`, lat, lon, lat, distance)
 	return cabs, err
-}
-
-// Just to make sure that a user with that id exists for tests, which might fail becauses of foreign key constraint
-func (db *Db) InsertTestUser(id int) {
-	r, err := db.d.Exec(`INSERT INTO users SET id=?`, id)
-	fmt.Println("Test User creation: ", r, err)
 }
 
 func (db *Db) FetchUnconfirmedBookings(userID int) ([]cs.BookingRequest, error) {

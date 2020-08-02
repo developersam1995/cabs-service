@@ -8,17 +8,12 @@ import (
 	"testing"
 
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
-	"github.com/developersam1995/cabs-service/storage"
 	"github.com/gin-gonic/gin"
 	"github.com/magiconair/properties/assert"
 )
 
 func TestBooking(t *testing.T) {
-	db, err := storage.New(config.Db)
-
-	if err != nil {
-		t.Fatal(err)
-	}
+	db := cs.NewBookingsMockDb()
 
 	r := gin.Default()
 	bs := cs.NewBookingService(db)
@@ -26,8 +21,6 @@ func TestBooking(t *testing.T) {
 	setupBookingRoutes(r, bs)
 
 	pw := httptest.NewRecorder()
-
-	db.InsertTestUser(1)
 
 	reqBody, err := json.Marshal(jsonMock{
 		"from_lat":    12.44,

@@ -5,7 +5,7 @@ import (
 )
 
 func TestBookingTwice(t *testing.T) {
-	mockDb := newBookingsMockDb()
+	mockDb := NewBookingsMockDb()
 	serv := NewBookingService(mockDb)
 
 	serv.Book(BookingRequest{

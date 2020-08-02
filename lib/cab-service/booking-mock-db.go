@@ -4,7 +4,7 @@ type mockBookingsDb struct {
 	brs []BookingRequest
 }
 
-func newBookingsMockDb() *mockBookingsDb {
+func NewBookingsMockDb() *mockBookingsDb {
 	s := []BookingRequest{}
 	return &mockBookingsDb{
 		brs: s,
