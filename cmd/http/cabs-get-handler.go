@@ -25,8 +25,8 @@ func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 			return
 		}
 
-		if distErr != nil || distance > maxCabDistance {
-			distance = maxCabDistance
+		if distErr != nil || distance > config.MaxCabGetDist {
+			distance = config.MaxCabGetDist
 		}
 
 		loc := cs.Location{
