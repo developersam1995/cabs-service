@@ -1,2 +1,2 @@
-install : 
-	go install cmd/http/./... 
+build :
+	go build cmd/http/* -o bin/httpd
