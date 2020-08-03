@@ -1,6 +1,6 @@
 package storage
 
-const schema = `
+const usersSchema = `
 CREATE TABLE IF NOT EXISTS users(
     id BIGINT AUTO_INCREMENT,
     name VARCHAR (100),
@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS users(
     hash_pwd TEXT,
     PRIMARY KEY (id),
     UNIQUE (country_code, phone)
-);
-
+);`
+const cabsSchema = `
 CREATE TABLE IF NOT EXISTS cabs(
     id BIGINT AUTO_INCREMENT,
     veh_no VARCHAR (20) NOT NULL,
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS cabs(
     PRIMARY KEY (id),
     UNIQUE (veh_no),
     FOREIGN KEY (driver_id) REFERENCES users (id)
-);
-
+);`
+const bookingsSchema = `
 CREATE TABLE IF NOT EXISTS bookings(
     id BIGINT AUTO_INCREMENT,
     from_lat DOUBLE (10,7) NOT NULL,
