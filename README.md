@@ -10,7 +10,7 @@
 * To test run `make test`
 
 TODO:
-To confirm booking 
-To register users
-To authenticate and authorize
-To register cabs
+* To confirm booking 
+* To register users
+* To authenticate and authorize
+* To register cabs
