@@ -43,7 +43,7 @@ func New(config DbConfig) (*Db, error) {
 		}
 		db.d.MustExec(usersSchema)
 		db.d.MustExec(cabsSchema)
-		db.d.MustExec(usersSchema)
+		db.d.MustExec(bookingsSchema)
 	})
 
 	return db, err
