@@ -3,6 +3,7 @@ module github.com/developersam1995/cabs-service
 go 1.14
 
 require (
+	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-openapi/spec v0.19.9 // indirect
@@ -11,7 +12,7 @@ require (
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/magiconair/properties v1.8.1
 	github.com/mailru/easyjson v0.7.2 // indirect
-	github.com/swaggo/swag v1.6.7 // indirect
+	github.com/swaggo/swag v1.6.7
 	github.com/urfave/cli/v2 v2.2.0 // indirect
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
 	golang.org/x/tools v0.0.0-20200731060945-b5fad4ed8dd6 // indirect
