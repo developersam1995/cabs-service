@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"sync"
 
+	"github.com/go-sql-driver/mysql"
+
 	cs "github.com/developersam1995/cabs-service/lib/cab-service"
 	"github.com/jmoiron/sqlx"
 )
@@ -53,6 +55,11 @@ func New(config DbConfig) (*Db, error) {
 func (db *Db) SaveBooking(req cs.BookingRequest) (int, error) {
 	r, err := db.d.Exec(`INSERT INTO bookings (from_lat, from_lon, to_lat, to_lon, pickup_time, user_id)
 	VALUES (?, ?, ?, ?, ?, ?)`, req.FromLat, req.FromLon, req.ToLat, req.ToLon, req.PickupTime, req.UserID)
+	mysqlErr := err.(*mysql.MySQLError)
+	if mysqlErr.Number == 1452 { // foreignKey Err
+		return 0, cs.ErrNoSuchUser
+	}
+
 	id, _ := r.LastInsertId()
 	return int(id), err
 }
