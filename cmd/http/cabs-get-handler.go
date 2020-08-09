@@ -8,6 +8,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Cab struct {
+	VehNo string  `json:"veh_no"`
+	Lat   float64 `json:"lat"`
+	Lon   float64 `json:"lon"`
+}
+
+// @Summary Get a list of cabs nearby from the given location
+// @Produce  json
+// @Param lat query number true "latitude"
+// @Param lon query number true "longitude"
+// @Param dist query integer true "distance in meters"
+// @Failure 400 {object} ErrResp
+// @Success 200 {object} []Cab
+// @Router /cabs [get]
 func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		lat := c.Query("lat")
@@ -19,9 +33,7 @@ func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 		distance, distErr := strconv.Atoi(dist)
 
 		if latErr != nil || lonErr != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": invalidQuery,
-			})
+			c.JSON(http.StatusBadRequest, newErrResp(invalidQuery))
 			return
 		}
 
@@ -31,16 +43,12 @@ func makeCabsGetter(cas cs.CabsService) gin.HandlerFunc {
 
 		cabs, err := cas.ListAll(latitude, longitude, distance)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": serverErrMsg,
-			})
+			c.JSON(http.StatusInternalServerError, newErrResp(serverErrMsg))
 			return
 		}
 		c.JSON(
 			http.StatusOK,
-			gin.H{
-				"cabs": cabs,
-			},
+			cabs,
 		)
 	}
 }

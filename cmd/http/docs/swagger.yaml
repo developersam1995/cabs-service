@@ -1,0 +1,151 @@
+definitions:
+  main.Booking:
+    properties:
+      from_lat:
+        type: number
+      from_lon:
+        type: number
+      id:
+        type: integer
+      is_confirmed:
+        type: integer
+      pickup_time:
+        type: integer
+      to_lat:
+        type: number
+      to_lon:
+        type: number
+      user_id:
+        type: integer
+    required:
+    - from_lat
+    - from_lon
+    - pickup_time
+    - to_lat
+    - to_lon
+    - user_id
+    type: object
+  main.BookingID:
+    type: object
+  main.BookingReq:
+    properties:
+      from_lat:
+        type: number
+      from_lon:
+        type: number
+      pickup_time:
+        type: integer
+      to_lat:
+        type: number
+      to_lon:
+        type: number
+      user_id:
+        type: integer
+    required:
+    - from_lat
+    - from_lon
+    - pickup_time
+    - to_lat
+    - to_lon
+    - user_id
+    type: object
+  main.Cab:
+    properties:
+      lat:
+        type: number
+      lon:
+        type: number
+      veh_no:
+        type: string
+    type: object
+  main.ErrResp:
+    properties:
+      error:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: APIs for booking and getting cabs.
+  license: {}
+  title: Cabs Servies API
+  version: "1.0"
+paths:
+  /booking:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Booking request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/main.BookingReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.BookingID'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrResp'
+      summary: Request for a cab booking
+  /booking/{userID}:
+    get:
+      parameters:
+      - description: userID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Booking'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrResp'
+      summary: Get the list of cab bookings previously made by the user
+  /cabs:
+    get:
+      parameters:
+      - description: latitude
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: longitude
+        in: query
+        name: lon
+        required: true
+        type: number
+      - description: distance in meters
+        in: query
+        name: dist
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Cab'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.ErrResp'
+      summary: Get a list of cabs nearby from the given location
+swagger: "2.0"

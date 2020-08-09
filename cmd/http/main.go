@@ -11,6 +11,11 @@ import (
 	"github.com/developersam1995/cabs-service/storage"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+
+	_ "github.com/developersam1995/cabs-service/cmd/http/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type jsonMock map[string]interface{}
@@ -52,6 +57,12 @@ func init() {
 
 }
 
+// @title Cabs Servies API
+// @version 1.0
+// @description APIs for booking and getting cabs.
+
+// @host localhost:8080
+
 func main() {
 	r := gin.Default()
 	db, err := storage.New(config.Db)
@@ -64,6 +75,9 @@ func main() {
 
 	setupBookingRoutes(r, bookingService)
 	setupCabRoutes(r, cabsService)
+
+	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	p := ":8080"
 	if config.Port > 0 {

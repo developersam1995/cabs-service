@@ -7,6 +7,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type BookingReq struct {
+	FromLat    float64 `json:"from_lat" binding:"required"`
+	FromLon    float64 `json:"from_lon" binding:"required"`
+	ToLat      float64 `json:"to_lat" binding:"required"`
+	ToLon      float64 `json:"to_lon" binding:"required"`
+	UserID     int     `json:"user_id" binding:"required"`
+	PickupTime int     `json:"pickup_time" binding:"required"`
+}
+
+type BookingID struct {
+	id int `json:"booking_id"`
+}
+
+// @Summary Request for a cab booking
+// @Produce  json
+// @Accept   json
+// @Success 200 {object} BookingID
+// @Failure 400 {object} ErrResp
+// @Param body body BookingReq true "Booking request"
+// @Router /booking [post]
 func makeBookingsPoster(b cs.BookingService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -14,20 +34,16 @@ func makeBookingsPoster(b cs.BookingService) gin.HandlerFunc {
 		// Keeping it in the body for the sake of brevity
 		br := cs.BookingRequest{}
 		if err := c.ShouldBindJSON(&br); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			c.JSON(http.StatusBadRequest, newErrResp(invalidRequestBody))
 			return
 		}
 		id, err := b.Book(br)
-		if err == cs.ErrUnconfirmedBookingsExist {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
-			})
+		if userErr, ok := err.(cs.UserErr); ok {
+			c.JSON(http.StatusBadRequest, newErrResp(userErr.Error()))
 			return
 		}
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": serverErrMsg,
-			})
+			c.JSON(http.StatusInternalServerError, newErrResp(serverErrMsg))
 			return
 		}
 		c.JSON(
