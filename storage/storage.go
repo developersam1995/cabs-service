@@ -68,7 +68,7 @@ func (db *Db) FetchBookings(userID int) ([]cs.BookingRequest, error) {
 	brs := []cs.BookingRequest{}
 	err := db.d.Select(&brs, `SELECT id, from_lat, from_lon,
 	to_lat, to_lon, pickup_time, is_confirmed, user_id 
-	FROM bookings AND user_id=? ORDER BY id DESC`, userID)
+	FROM bookings WHERE user_id=? ORDER BY id DESC`, userID)
 	return brs, err
 }
 
